@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChillyElevator — Indie Game Studio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --accent: #7c5cfc;
+      --accent-dim: #4a36a8;
+      --text: #e8e8f0;
+      --text-muted: #7a7a9a;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Stars background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 50%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 70%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 35%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 20% 80%, rgba(255,255,255,0.2) 0%, transparent 100%),
+        radial-gradient(1px 1px at 45% 90%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 10%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5% 60%, rgba(255,255,255,0.2) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 45%, rgba(255,255,255,0.3) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1.2rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10,10,15,0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(124,92,252,0.15);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--text);
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .elevator-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    h1 span {
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(124,92,252,0.15);
+      border: 1px solid rgba(124,92,252,0.35);
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.85rem 2.2rem;
+      border-radius: 8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .cta-btn:hover {
+      background: var(--accent-dim);
+      transform: translateY(-2px);
+    }
+
+    /* About section */
+    .section {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+
+    .section h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.2rem;
+    }
+
+    .section p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    /* Cards */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+      margin-top: 3rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 1.8rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: rgba(124,92,252,0.4);
+      transform: translateY(-3px);
+    }
+
+    .card-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 100%;
+    }
+
+    /* Divider */
+    .divider {
+      position: relative;
+      z-index: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(124,92,252,0.3), transparent);
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">chilly<span>elevator</span></div>
+    <a href="mailto:contact@chillyelevator.com">Contact</a>
+  </nav>
+
+  <section class="hero">
+    <div class="elevator-icon">🛗</div>
+    <div class="badge">Indie Game Studio</div>
+    <h1>We make <span>games</span><br />people remember.</h1>
+    <p class="hero-sub">
+      ChillyElevator is an indie game development studio focused on crafting unique experiences — from pixel-art adventures to atmospheric puzzles.
+    </p>
+    <a class="cta-btn" href="#about">Learn more</a>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section" id="about">
+    <div class="section-label">Who we are</div>
+    <h2>A small studio,<br />big ideas.</h2>
+    <p>
+      Founded with a passion for interactive storytelling and creative gameplay, ChillyElevator builds games that feel handcrafted. We believe the best games come from taking your time — and having a good elevator to think in.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🎮</div>
+        <h3>Game Development</h3>
+        <p>We design and develop original games across PC and mobile platforms, from concept to release.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎨</div>
+        <h3>Art & Design</h3>
+        <p>Every visual is crafted in-house — pixel art, UI, animation — with attention to mood and style.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔊</div>
+        <h3>Sound & Atmosphere</h3>
+        <p>Audio is half the experience. We build worlds you can feel through the speakers.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <footer>
+    <p>&copy; 2026 ChillyElevator. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
